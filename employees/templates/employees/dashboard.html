@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Attendance Overview</h1>
+    <canvas id="attendanceChart" width="400" height="200"></canvas>
+
+    <script>
+        fetch('/api/attendance/')
+            .then(response => response.json())
+            .then(data => {
+                const statusCounts = { P: 0, A: 0, L: 0 };
+                data.forEach(item => {
+                    statusCounts[item.status] = (statusCounts[item.status] || 0) + 1;
+                });
+
+                const ctx = document.getElementById('attendanceChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Present', 'Absent', 'Late'],
+                        datasets: [{
+                            label: 'Attendance Count',
+                            data: [statusCounts.P, statusCounts.A, statusCounts.L],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+</body>
+</html>
