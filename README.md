@@ -120,4 +120,4 @@ The dashboard (`/api/dashboard/`) visualizes attendance statistics using Chart.j
 
 ## License
 
-[MIT](LICENSE) (or your preferred license) 
+[MIT](LICENSE)
